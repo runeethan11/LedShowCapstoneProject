@@ -167,7 +167,7 @@ void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCa
     delay(Delayed);
   }
   
-  for (int i = strip.numPixels() - Pixels; i >= 0; i--)
+  for (int i=0 + Pixels; i < strip.numPixels()+1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
@@ -178,12 +178,12 @@ void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCa
     
     
     //first chase bouncing back
-    strip.setPixelColor(i, c);
-    strip.setPixelColor(i + Pixels, 0);
+    strip.setPixelColor(strip.numPixels() - i, c); //draws the first colour bouncing back
+    strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erases the pixel however many steps back
     
     //second chase bouncing back
-    strip.setPixelColor(i - strip.numPixels() , d);
-    strip.setPixelColor(i - strip.numPixels() + Pixels, 0);
+    strip.setPixelColor(i, d); //Draws the second colour bouncing back
+    strip.setPixelColor(i-Pixels, 0); //Erases the pixel however many steps back
     
     strip.show();
     delay(Delayed);
