@@ -178,8 +178,8 @@ void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCa
     
     
     //first chase bouncing back
-    //strip.setPixelColor(i, c);
-    //strip.setPixelColor(i + Pixels, 0);
+    strip.setPixelColor(i, c);
+    strip.setPixelColor(i + Pixels, 0);
     
     //second chase bouncing back
     strip.setPixelColor(i - strip.numPixels() , d);
