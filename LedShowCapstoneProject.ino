@@ -73,6 +73,8 @@ void LedShows(int i)
             break;
     case 5: DoubleBounce(strip.Color(72, 6, 213), strip.Color(76, 152, 3), 6, 30, 5); // Molly and Kira's Colour
             break;
+    case 6: DoubleHalfBounce(strip.Color(76, 220, 171), strip.Color(200, 0, 0), 6, 30, 6); // Jack and Someones Colour
+            break;
     
   }
 }
@@ -190,8 +192,15 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
   }
 }
 
-void DoubleHalfBounce()
+void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
-  
+  for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
+  {
+    if (CurrentCase != CurrentLedShow)
+    {
+      LedOff(Pixels);
+      break;
+    }
+  }
 }
 
