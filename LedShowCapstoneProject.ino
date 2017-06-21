@@ -196,11 +196,54 @@ void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delaye
 {
   for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
   {
+    
+    //The first chase across
     if (CurrentCase != CurrentLedShow)
     {
       LedOff(Pixels);
       break;
     }
+    
+    //first chase
+    strip.setPixelColor(i, colour1); //Draw new pixel
+    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
+    
+    //second chase
+    strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel on chase thats heading opposite way
+    strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
+    
+    strip.show();
+    delay(Delayed);   
+  }
+  
+  //The chases bounce back and stop at the middle
+  for(int i = 0; i < strip.numPixels / 2 + 1; i++)
+  {
+    if (CurrentCase != CurrentLedShow)
+    {
+      LedOff(Pixels)
+      break;
+    }
+  }
+  
+  //The chases bounce back from the middle to the ends again
+  for()
+  {
+  }
+  
+  //The chases go from the sides to the other side
+  for()
+  {
+  }
+  
+  //The chases go to the middle again
+  for()
+  {
+  }
+  
+  //The chases bounce back to the first side
+  for()
+  {
   }
 }
 
