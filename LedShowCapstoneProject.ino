@@ -88,7 +88,7 @@ void LedOff(int Pixels)
 }
 
 //Simple chase
-static void Chase(uint32_t c, int Pixels, int Delayed, int CurrentCase)
+static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
   
   
@@ -99,7 +99,7 @@ static void Chase(uint32_t c, int Pixels, int Delayed, int CurrentCase)
       LedOff(Pixels);
       break;
     }
-    strip.setPixelColor(i  , c); // Draw new pixel
+    strip.setPixelColor(i  , colour1); // Draw new pixel
     strip.setPixelColor(i-Pixels, 0); // Erase pixel a few steps back
     strip.show();
     delay(Delayed);
@@ -107,7 +107,7 @@ static void Chase(uint32_t c, int Pixels, int Delayed, int CurrentCase)
 }
 
 //one chase backing back and forth
-void Bounce(uint32_t c, int Pixels, int Delayed, int CurrentCase)
+void Bounce(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
 
   for(int i=0+Pixels; i<strip.numPixels(); i++)
@@ -119,7 +119,7 @@ void Bounce(uint32_t c, int Pixels, int Delayed, int CurrentCase)
       break;
     }
     
-    strip.setPixelColor(i, c); //Draws a new pixel
+    strip.setPixelColor(i, colour1); //Draws a new pixel
     strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
     strip.show();
     delay(Delayed); //how big the delay is before the next pixels get written and erased
@@ -134,7 +134,7 @@ void Bounce(uint32_t c, int Pixels, int Delayed, int CurrentCase)
      break;
    }
   
-   strip.setPixelColor(i, c); //Draw new pixel
+   strip.setPixelColor(i, colour1); //Draw new pixel
    strip.setPixelColor(i+Pixels, 0); //Erases pixels however many steps back
    strip.show();
   
@@ -143,7 +143,7 @@ void Bounce(uint32_t c, int Pixels, int Delayed, int CurrentCase)
 }
 
 //two chases backing back and forth
-void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCase)
+void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
   
   for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
@@ -156,11 +156,11 @@ void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCa
     }
     
     //first chase
-    strip.setPixelColor(i, c); //Draw new pixel
+    strip.setPixelColor(i, colour1); //Draw new pixel
     strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
     
     //second chase
-    strip.setPixelColor(strip.numPixels() - i, d); //Draw new pixel on chase thats heading opposite way
+    strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel on chase thats heading opposite way
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
     
     strip.show();
@@ -178,15 +178,20 @@ void DoubleBounce(uint32_t c, uint32_t d, int Pixels, int Delayed, int CurrentCa
     
     
     //first chase bouncing back
-    strip.setPixelColor(strip.numPixels() - i, c); //draws the first colour bouncing back
+    strip.setPixelColor(strip.numPixels() - i, colour1); //draws the first colour bouncing back
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erases the pixel however many steps back
     
     //second chase bouncing back
-    strip.setPixelColor(i, d); //Draws the second colour bouncing back
+    strip.setPixelColor(i, colour2); //Draws the second colour bouncing back
     strip.setPixelColor(i-Pixels, 0); //Erases the pixel however many steps back
     
     strip.show();
     delay(Delayed);
   }
+}
+
+void DoubleHalfBounce()
+{
+  
 }
 
