@@ -322,3 +322,7 @@ void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delaye
   }
 }
 
+void NextLedShow()
+{
+}
+
