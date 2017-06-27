@@ -322,7 +322,17 @@ void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delaye
   }
 }
 
-void NextLedShow()
+//A chase where you have a chase however many pixels long followed by empty space that long then another chase that long... just that on and on ya feel
+void DashedChase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
+  for()
+  {
+    if(CurrentCase != CurrentLedShow)
+    {
+      LedOff(Pixels);
+      break;
+    }
+    
+  }
 }
 
