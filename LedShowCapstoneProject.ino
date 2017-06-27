@@ -33,7 +33,7 @@ void loop()
 void ForwardButton()
 {
   //sets a no interrupt window however many milliseconds long
-  if (millis() - LastInterrupt0 > 100)
+  if (millis() - LastInterrupt0 > 150)
   {
     //changes the led show that is being run to the next one in line
     CurrentLedShow = CurrentLedShow + 1;
@@ -45,7 +45,7 @@ void ForwardButton()
 void BackwardButton()
 {
   //sets a no interrupt window however many milliseconds long
-  if (millis() - LastInterrupt1 > 100)
+  if (millis() - LastInterrupt1 > 150)
   {
     //changes the led show that is being run to the previous one
     CurrentLedShow = CurrentLedShow - 1;
@@ -65,7 +65,7 @@ void LedShows(int i)
             break;
     case 1: Chase(strip.Color(255, 30, 20),15, 20, 1); // Ben's Colour
             break;
-    case 2: Chase(strip.Color(200, 130, 0), 30, 40, 2); // Colour
+    case 2: Chase(strip.Color(200, 130, 0), 30, 40, 2); // Random Colour
             break;
     case 3: Chase(strip.Color(183, 54, 7),60, 10, 3); // Damien's Colour
             break;
@@ -73,7 +73,7 @@ void LedShows(int i)
             break;
     case 5: DoubleBounce(strip.Color(72, 6, 213), strip.Color(76, 152, 3), 6, 30, 5); // Molly and Kira's Colour
             break;
-    case 6: DoubleHalfBounce(strip.Color(76, 220, 171), strip.Color(244, 184, 0), 9, 40, 6); // Jack and Molly's Favourite Colour
+    case 6: DoubleHalfBounce(strip.Color(76, 220, 171), strip.Color(244, 184, 0), 10, 38, 6); // Jack and Molly's Favourite Colour
             break;
     
   }
