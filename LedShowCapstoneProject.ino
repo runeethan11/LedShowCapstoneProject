@@ -16,8 +16,8 @@ void setup()
 {
   pinMode(ButPin0, INPUT_PULLUP);
   pinMode(ButPin1, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(ButPin0), ForwardButton, RISING); //Sets pin 2 as the forward pin intterupt
-  attachInterrupt(digitalPinToInterrupt(ButPin1), BackwardButton, RISING); //Sets pin 3 as the backwards pin intterupt
+  attachInterrupt(digitalPinToInterrupt(ButPin0), ForwardButton, RISING); //Sets pin 2 as the forward pin intterupt, RISING means the interrupt triggers whenever the pin goes from LOW to HIGH
+  attachInterrupt(digitalPinToInterrupt(ButPin1), BackwardButton, RISING); //Sets pin 3 as the backwards pin intterupt, RISING means the interrupt triggers whenever the pin goes from LOW to HIGH
   
   strip.begin(); //intializes led's
   strip.setBrightness(10); //set's the led brightness
