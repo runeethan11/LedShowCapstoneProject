@@ -18,7 +18,7 @@ void setup()
   pinMode(ButPin1, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(ButPin0), ForwardButton, RISING); //Sets pin 2 as the forward pin intterupt, RISING means the interrupt triggers whenever the pin goes from LOW to HIGH
   attachInterrupt(digitalPinToInterrupt(ButPin1), BackwardButton, RISING); //Sets pin 3 as the backwards pin intterupt, RISING means the interrupt triggers whenever the pin goes from LOW to HIGH
-  
+
   strip.begin(); //intializes led's
   strip.setBrightness(10); //set's the led brightness
   strip.show(); //supposedly intializes all leds to an off state
@@ -37,7 +37,7 @@ void ForwardButton()
   {
     //changes the led show that is being run to the next one in line
     CurrentLedShow = CurrentLedShow + 1;
-    
+
     LastInterrupt0 = millis();
   }
 }
@@ -49,7 +49,7 @@ void BackwardButton()
   {
     //changes the led show that is being run to the previous one
     CurrentLedShow = CurrentLedShow - 1;
-    
+
     LastInterrupt1 = millis();
   }
 }
@@ -59,30 +59,32 @@ void LedShows(int i)
 {
   //each case is an led show that will be run
   //it runs the case that corresponds to the variable the function is giving
-  switch(i)
+  switch (i)
   {
     case 0: Chase(strip.Color(0, 200, 180), 8, 30, 0); // Ethan's Colour
-            break;
-    case 1: Chase(strip.Color(255, 30, 20),15, 20, 1); // Ben's Colour
-            break;
+      break;
+    case 1: Chase(strip.Color(255, 30, 20), 15, 20, 1); // Ben's Colour
+      break;
     case 2: Chase(strip.Color(200, 130, 0), 30, 40, 2); // Random Colour
-            break;
-    case 3: Chase(strip.Color(183, 54, 7),60, 10, 3); // Damien's Colour
-            break;
+      break;
+    case 3: Chase(strip.Color(183, 54, 7), 60, 10, 3); // Damien's Colour
+      break;
     case 4: Bounce(strip.Color(255, 20, 147), 5, 30, 4); //Jensen's Colour
-            break;
+      break;
     case 5: DoubleBounce(strip.Color(72, 6, 213), strip.Color(76, 152, 3), 6, 30, 5); // Molly and Kira's Colour
-            break;
+      break;
     case 6: DoubleHalfBounce(strip.Color(76, 220, 171), strip.Color(244, 184, 0), 10, 38, 6); // Jack and Molly's Favourite Colour
-            break;
-    
+      break;
+    case 7: Dashes(strip.Color(180, 14, 100), 10, 4, 200, 7); //Random Colour
+      break;
+
   }
 }
 
 //turns off all led's
-void LedOff(int Pixels)
+void LedOff()
 {
-  for(int i=0; i<strip.numPixels(); i++)
+  for (int i = 0; i < strip.numPixels(); i++)
   {
     strip.setPixelColor(i, 0);
   }
@@ -92,17 +94,17 @@ void LedOff(int Pixels)
 //Simple chase
 static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
-  
-  
-  for(int i=0; i<strip.numPixels()+Pixels; i++)
+
+
+  for (int i = 0; i < strip.numPixels() + Pixels; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
     strip.setPixelColor(i  , colour1); // Draw new pixel
-    strip.setPixelColor(i-Pixels, 0); // Erase pixel a few steps back
+    strip.setPixelColor(i - Pixels, 0); // Erase pixel a few steps back
     strip.show();
     delay(Delayed);
   }
@@ -112,81 +114,81 @@ static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 void Bounce(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
 
-  for(int i=0+Pixels; i<strip.numPixels(); i++)
+  for (int i = 0 + Pixels; i < strip.numPixels(); i++)
   {
-    
+
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     strip.setPixelColor(i, colour1); //Draws a new pixel
-    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
+    strip.setPixelColor(i - Pixels, 0); //Erases pixel however many steps back
     strip.show();
     delay(Delayed); //how big the delay is before the next pixels get written and erased
   }
-  
-  for (int i = strip.numPixels()-Pixels; i>=0; i--)
+
+  for (int i = strip.numPixels() - Pixels; i >= 0; i--)
   {
-    
-   if (CurrentCase != CurrentLedShow)
-   {
-     LedOff(Pixels);
-     break;
-   }
-  
-   strip.setPixelColor(i, colour1); //Draw new pixel
-   strip.setPixelColor(i+Pixels, 0); //Erases pixels however many steps back
-   strip.show();
-  
-   delay(Delayed); //how big the delay is before the next pixels get written and erased  
+
+    if (CurrentCase != CurrentLedShow)
+    {
+      LedOff();
+      break;
+    }
+
+    strip.setPixelColor(i, colour1); //Draw new pixel
+    strip.setPixelColor(i + Pixels, 0); //Erases pixels however many steps back
+    strip.show();
+
+    delay(Delayed); //how big the delay is before the next pixels get written and erased
   }
 }
 
 //two chases backing back and forth
 void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
-  
-  for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
+
+  for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
-    
+
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     //first chase
     strip.setPixelColor(i, colour1); //Draw new pixel
-    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
-    
+    strip.setPixelColor(i - Pixels, 0); //Erases pixel however many steps back
+
     //second chase
     strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel on chase thats heading opposite way
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
-    
+
     strip.show();
     delay(Delayed);
   }
-  
-  for (int i=0 + Pixels; i < strip.numPixels()+1; i++)
+
+  for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
-    
-    
+
+
+
     //first chase bouncing back
     strip.setPixelColor(strip.numPixels() - i, colour1); //draws the first colour bouncing back
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erases the pixel however many steps back
-    
+
     //second chase bouncing back
     strip.setPixelColor(i, colour2); //Draws the second colour bouncing back
-    strip.setPixelColor(i-Pixels, 0); //Erases the pixel however many steps back
-    
+    strip.setPixelColor(i - Pixels, 0); //Erases the pixel however many steps back
+
     strip.show();
     delay(Delayed);
   }
@@ -194,145 +196,159 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
 
 void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
-  for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
+  for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
-    
+
     //The chases start and go to the opposite sides across
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     //first chase
     strip.setPixelColor(i, colour1); //Draw new pixel
-    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
-    
+    strip.setPixelColor(i - Pixels, 0); //Erases pixel however many steps back
+
     //second chase
     strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel on chase thats heading opposite way
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
-    
+
     strip.show();
-    delay(Delayed);   
+    delay(Delayed);
   }
-  
+
   //The chases bounce back from opposite sides and stop at the middle\
-  for(int i=0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
+  for (int i = 0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     //first chase bouncing back to middle
     strip.setPixelColor(strip.numPixels() - i, colour1); //Draw new pixel
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
-    
+
     //second chase bouncing back to middle
     strip.setPixelColor(i, colour2); //Draw new pixel
-    strip.setPixelColor(i-Pixels, 0);//Erase pixel few steps back
-    
+    strip.setPixelColor(i - Pixels, 0); //Erase pixel few steps back
+
     strip.show();
     delay(Delayed);
   }
-  
+
   //The chases bounce back from the middle to the opposite ends again
-  for(int i=0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
+  for (int i = 0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     //first chase bouncing from middle back to opposite side
     strip.setPixelColor(strip.numPixels() / 2 + i, colour1); //Draw new pixel
     strip.setPixelColor(strip.numPixels() / 2 + i - Pixels , 0);//Erase pixel few steps back
-    
+
     //Second chase bouncing from middle back to opposite side
     strip.setPixelColor(strip.numPixels() / 2 - i, colour2); //Draw new pixel
     strip.setPixelColor(strip.numPixels() / 2 - i + Pixels, 0); //erase pixel few steps back
-    
+
     strip.show();
     delay(Delayed);
   }
-  
+
   //The chases go from the sides to the other side
-  for(int i=0 + Pixels; i < strip.numPixels()+1; i++)
+  for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
     //first chase going back to first side
     strip.setPixelColor(strip.numPixels() - i, colour1); //Draw new pixel
     strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
-    
+
     //second chase going back to its first side
     strip.setPixelColor(i, colour2); //Draw new pixel
-    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
-    
+    strip.setPixelColor(i - Pixels, 0); //Erases pixel however many steps back
+
     strip.show();
     delay(Delayed);
   }
-  
+
   //The chases go to the middle again
-  for(int i=0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
-  {
-    if(CurrentCase != CurrentLedShow)
-    {
-      LedOff(Pixels);
-      break;
-    }
-    
-    //first chase bouncing from first side to middle
-    strip.setPixelColor(i, colour1); //Draw new pixel
-    strip.setPixelColor(i-Pixels, 0); //Erases pixel however many steps back
-    
-    //second chase bouncing from opposite side to middle
-    strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel
-    strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
-    
-    strip.show();
-    delay(Delayed);
-  }
-  
-  //The chases bounce back to the first side
-  for(int i=0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
+  for (int i = 0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
-    
+
+    //first chase bouncing from first side to middle
+    strip.setPixelColor(i, colour1); //Draw new pixel
+    strip.setPixelColor(i - Pixels, 0); //Erases pixel however many steps back
+
+    //second chase bouncing from opposite side to middle
+    strip.setPixelColor(strip.numPixels() - i, colour2); //Draw new pixel
+    strip.setPixelColor(strip.numPixels() - i + Pixels, 0); //erase pixel few steps back
+
+    strip.show();
+    delay(Delayed);
+  }
+
+  //The chases bounce back to the first side
+  for (int i = 0 + Pixels; i < strip.numPixels() / 2 + 1; i++)
+  {
+    if (CurrentCase != CurrentLedShow)
+    {
+      LedOff();
+      break;
+    }
+
     //first chase bouncing back from middle to first side
     strip.setPixelColor(strip.numPixels() / 2 - i, colour1); //Draw new pixel
     strip.setPixelColor(strip.numPixels() / 2 - i + Pixels, 0); //erase pixel few steps back
-    
+
     //second chase bouncing back from middle to opposite side
     strip.setPixelColor(strip.numPixels() / 2 + i, colour2); //Draw new pixel
     strip.setPixelColor(strip.numPixels() / 2 + i - Pixels , 0);//Erase pixel few steps back
-    
+
     strip.show();
     delay(Delayed);
   }
 }
 
-//A chase where you have a chase however many pixels long followed by empty space that long then another chase that long... just that on and on ya feel
-void DashedChase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
+//A line of dashes however long
+//DashLength is how long each dash is
+//PixelGap is how many pixels from the first pixel of one dash to the first pixel of the next dash
+void Dashes(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int CurrentCase)
 {
-  for()
+  for (int h = 0; h < DashLength; h++)
   {
-    if(CurrentCase != CurrentLedShow)
+    if (CurrentCase != CurrentLedShow)
     {
-      LedOff(Pixels);
+      LedOff();
       break;
     }
     
+    for (int i = 0; i < strip.numPixels(); i = i + PixelGap)
+    {
+      if (CurrentCase != CurrentLedShow)
+      {
+        LedOff();
+        break;
+      }
+      
+      strip.setPixelColor(i + h, colour1);    //turn every third pixel on
+      strip.show();
+      delay(Delayed);
+    }
   }
 }
 
