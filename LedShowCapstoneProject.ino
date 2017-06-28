@@ -79,8 +79,12 @@ void LedShows(int i)
             break;
     case 8: DashErase(strip.Color(40, 190, 60), 10, 5, 175, 8); //Placeholder Colour
             break;
-    case 9: DashErase(strip.Color(45, 60, 200), 10, 10, 150, 9); //Placeholder Colour
-            break;
+    case 9: DashErase(strip.Color(45, 60, 200), 10, 10, 20, 9); //Placeholder Colour
+             break;
+    case 10: Wipe(strip.Color(0, 200, 0), 10); //Placeholder Colour
+             break;
+    case 11: ChangingWipe(5, 11);
+             break;
 
   }
 }
@@ -98,8 +102,7 @@ void LedOff()
 //Simple chase
 static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
-
-
+  
   for (int i = 0; i < strip.numPixels() + Pixels; i++)
   {
     if (CurrentCase != CurrentLedShow)
@@ -107,6 +110,7 @@ static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
       LedOff();
       break;
     }
+
     strip.setPixelColor(i  , colour1); // Draw new pixel
     strip.setPixelColor(i - Pixels, 0); // Erase pixel a few steps back
     strip.show();
@@ -198,6 +202,7 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
   }
 }
 
+//Two chases that bounce back and forth but bounce off eachother every second time
 void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
   for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
@@ -412,6 +417,60 @@ void DashErase(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int 
   }
 }
 
+//
+void Wipe(uint32_t colour1, int CurrentCase)
+{
+  for(int i = 0; i < strip.numPixels(); i++)
+  {
+    if(CurrentCase != CurrentLedShow)
+    {
+      LedOff();
+      break;
+    }
+    strip.setPixelColor(i, colour1);
+    strip.show();
+  }
+}
+
+//a wipe that changes colour
+void ChangingWipe(int Delayed, int CurrentCase)
+{
+  for(int ColourValue = 0; ColourValue < 255; ColourValue++)
+  {
+    if(CurrentCase != CurrentLedShow)
+    {
+      LedOff();
+      break;
+    }
+    
+    for(int i = 0; i< strip.numPixels(); i++)
+    {
+      if(CurrentCase != CurrentLedShow)
+      {
+        LedOff();
+        break;
+      }
+      strip.setPixelColor(i, Wheel(ColourValue));
+    }
+    strip.show();
+    delay(Delayed);
+  }
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+   return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  } else if(WheelPos < 170) {
+    WheelPos -= 85;
+   return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  } else {
+   WheelPos -= 170;
+   return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+  }
+}
 
 
 
