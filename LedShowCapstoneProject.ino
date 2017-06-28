@@ -1,4 +1,4 @@
-#include <Adafruit_NeoPixel.h>
+c#include <Adafruit_NeoPixel.h>
 
 //Pins 2 and 3 can generate interrupts and correpspond to interrupt vectors 0 and 1 respectively
 #define ButPin0 2 //Pin forward button is hooked up to
@@ -102,7 +102,7 @@ void LedOff()
 //Simple chase
 static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
-  
+  //runs the chase until it gets to the end of the strip
   for (int i = 0; i < strip.numPixels() + Pixels; i++)
   {
     if (CurrentCase != CurrentLedShow)
@@ -121,7 +121,8 @@ static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 //one chase backing back and forth
 void Bounce(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
-
+  
+  //makes the chase run to the end of the strip
   for (int i = 0 + Pixels; i < strip.numPixels(); i++)
   {
 
@@ -136,7 +137,8 @@ void Bounce(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
     strip.show();
     delay(Delayed); //how big the delay is before the next pixels get written and erased
   }
-
+  
+  //makes the chase run from the end of the strip back to the front of it
   for (int i = strip.numPixels() - Pixels; i >= 0; i--)
   {
 
@@ -157,7 +159,8 @@ void Bounce(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 //two chases backing back and forth
 void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
-
+  
+  //makes both chases run across the strip
   for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
 
@@ -179,6 +182,7 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
     delay(Delayed);
   }
 
+  //makes both the chases run back to their starting sides
   for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
     if (CurrentCase != CurrentLedShow)
@@ -186,8 +190,6 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
       LedOff();
       break;
     }
-
-
 
     //first chase bouncing back
     strip.setPixelColor(strip.numPixels() - i, colour1); //draws the first colour bouncing back
@@ -205,6 +207,7 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
 //Two chases that bounce back and forth but bounce off eachother every second time
 void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
+  //Makes both chases run across the strip
   for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
   {
 
@@ -368,7 +371,7 @@ void Dashes(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int Cur
 //PixelGap is how many pixels from the first pixel of one dash to the first pixel of the next dash
 void DashErase(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int CurrentCase)
 {
-  //Draws new pixels
+  //Draws the dashes all the way across the strip
   for (int DashSize = 0; DashSize < DashLength; DashSize++) //runs the function till the dashes meet the specified length
   {
     if (CurrentCase != CurrentLedShow)
@@ -392,7 +395,7 @@ void DashErase(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int 
     }
   }
   
-  //Erases the pixels
+  //Erases the dashes just like they were drawn
   for (int DashSize = 0; DashSize < DashLength; DashSize++)
   {
     if (CurrentCase != CurrentLedShow)
