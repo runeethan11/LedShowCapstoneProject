@@ -79,7 +79,7 @@ void LedShows(int i)
             break;
     case 8: DashErase(strip.Color(40, 190, 60), 10, 5, 175, 8); //Placeholder Colour
             break;
-    case 9: DashErase(strip.Color(45, 60, 200), 10, 10, 150, 9); //Placeholder Colour
+    case 9: DashErase(strip.Color(45, 60, 200), 10, 10, 20, 9); //Placeholder Colour
             break;
 
   }
@@ -98,8 +98,7 @@ void LedOff()
 //Simple chase
 static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
 {
-
-
+  
   for (int i = 0; i < strip.numPixels() + Pixels; i++)
   {
     if (CurrentCase != CurrentLedShow)
@@ -107,6 +106,7 @@ static void Chase(uint32_t colour1, int Pixels, int Delayed, int CurrentCase)
       LedOff();
       break;
     }
+
     strip.setPixelColor(i  , colour1); // Draw new pixel
     strip.setPixelColor(i - Pixels, 0); // Erase pixel a few steps back
     strip.show();
@@ -198,6 +198,7 @@ void DoubleBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, i
   }
 }
 
+//Two chases that bounce back and forth but bounce off eachother every second time
 void DoubleHalfBounce(uint32_t colour1, uint32_t colour2, int Pixels, int Delayed, int CurrentCase)
 {
   for (int i = 0 + Pixels; i < strip.numPixels() + 1; i++)
