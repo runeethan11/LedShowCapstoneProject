@@ -417,7 +417,7 @@ void DashErase(uint32_t colour1, int PixelGap, int DashLength, int Delayed, int 
   }
 }
 
-//
+//A normal simple wipe
 void Wipe(uint32_t colour1, int CurrentCase)
 {
   for(int i = 0; i < strip.numPixels(); i++)
